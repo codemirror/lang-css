@@ -1,5 +1,5 @@
-import {CompletionSource, Completion} from "@codemirror/next/autocomplete"
-import {syntaxTree} from "@codemirror/next/language"
+import {CompletionSource, Completion} from "@codemirror/autocomplete"
+import {syntaxTree} from "@codemirror/language"
 
 let _properties: readonly Completion[] | null = null
 function properties() {
