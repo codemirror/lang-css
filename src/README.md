@@ -20,22 +20,9 @@ conduct](http://contributor-covenant.org/version/1/1/0/) that applies
 to communication around the project.
 
 ## API Reference
-<dl>
-<dt id="user-content-css">
-  <code><strong><a href="#user-content-css">css</a></strong>() → <a href="https://codemirror.net/6/docs/ref#language.LanguageSupport">LanguageSupport</a></code></dt>
 
-<dd><p>Language support for CSS.</p>
-</dd>
-<dt id="user-content-csslanguage">
-  <code><strong><a href="#user-content-csslanguage">cssLanguage</a></strong>: <a href="https://codemirror.net/6/docs/ref#language.LezerLanguage">LezerLanguage</a></code></dt>
+@css
 
-<dd><p>A language provider based on the <a href="https://github.com/lezer-parser/css">Lezer CSS
-parser</a>, extended with
-highlighting and indentation information.</p>
-</dd>
-<dt id="user-content-csscompletion">
-  <code><strong><a href="#user-content-csscompletion">cssCompletion</a></strong>: <a href="https://codemirror.net/6/docs/ref#state.Extension">Extension</a></code></dt>
+@cssLanguage
 
-<dd><p>CSS property and value keyword completion.</p>
-</dd>
-</dl>
+@cssCompletion
