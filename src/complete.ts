@@ -122,7 +122,7 @@ const tags = [
 const span = /^[\w-]*/
 
 export const completeCSS: CompletionSource = context => {
-  let {state, pos} = context, node = syntaxTree(state).resolve(pos, -1)
+  let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
   if (node.name == "PropertyName")
     return {from: node.from, options: properties(), span}
   if (node.name == "ValueName")

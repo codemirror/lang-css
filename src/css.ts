@@ -1,4 +1,4 @@
-import {parser} from "lezer-css"
+import {parser} from "@lezer/css"
 import {LezerLanguage, continuedIndent, indentNodeProp, foldNodeProp, foldInside, LanguageSupport} from "@codemirror/language"
 import {styleTags, tags as t} from "@codemirror/highlight"
 import {Extension} from "@codemirror/state"
