@@ -25,7 +25,6 @@ export const cssLanguage = LRLanguage.define({
         TagName: t.typeName,
         ClassName: t.className,
         PseudoClassName: t.constant(t.className),
-        not: t.operatorKeyword,
         IdName: t.labelName,
         "FeatureName PropertyName AttributeName": t.propertyName,
         NumberLiteral: t.number,
