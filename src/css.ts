@@ -2,7 +2,8 @@ import {parser} from "@lezer/css"
 import {LRLanguage, continuedIndent, indentNodeProp, foldNodeProp, foldInside, LanguageSupport} from "@codemirror/language"
 import {styleTags, tags as t} from "@codemirror/highlight"
 import {Extension} from "@codemirror/state"
-import {completeCSS} from "./complete"
+import {cssCompletionSource} from "./complete"
+export {cssCompletionSource} from "./complete"
 
 /// A language provider based on the [Lezer CSS
 /// parser](https://github.com/lezer-parser/css), extended with
@@ -60,8 +61,8 @@ export const cssLanguage = LRLanguage.define({
   }
 })
 
-/// CSS property and value keyword completion.
-export const cssCompletion: Extension = cssLanguage.data.of({autocomplete: completeCSS})
+// FIXME remove on next major version
+export const cssCompletion: Extension = cssLanguage.data.of({autocomplete: cssCompletionSource})
 
 /// Language support for CSS.
 export function css() {

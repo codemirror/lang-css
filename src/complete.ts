@@ -121,7 +121,8 @@ const tags = [
 
 const span = /^[\w-]*/
 
-export const completeCSS: CompletionSource = context => {
+/// CSS property and value keyword completion source.
+export const cssCompletionSource: CompletionSource = context => {
   let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
   if (node.name == "PropertyName")
     return {from: node.from, options: properties(), span}

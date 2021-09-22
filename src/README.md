@@ -25,4 +25,4 @@ to communication around the project.
 
 @cssLanguage
 
-@cssCompletion
+@cssCompletionSource
