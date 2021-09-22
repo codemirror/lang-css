@@ -1,3 +1,9 @@
+## 0.19.2 (2021-09-22)
+
+### New features
+
+The package now exports a completion source function, rather than a prebuilt completion extension.
+
 ## 0.19.1 (2021-08-11)
 
 ### Bug fixes
