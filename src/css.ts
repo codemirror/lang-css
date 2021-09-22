@@ -55,7 +55,8 @@ export const cssLanguage = LRLanguage.define({
   }),
   languageData: {
     commentTokens: {block: {open: "/*", close: "*/"}},
-    indentOnInput: /^\s*\}$/
+    indentOnInput: /^\s*\}$/,
+    wordChars: "-"
   }
 })
 
