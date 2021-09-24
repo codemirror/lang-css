@@ -1,3 +1,9 @@
+## 0.19.3 (2021-09-24)
+
+### Bug fixes
+
+Use more appropriate highlighting tags for attribute names, tag names, and CSS variables.
+
 ## 0.19.2 (2021-09-22)
 
 ### New features
