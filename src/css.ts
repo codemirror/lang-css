@@ -1,6 +1,5 @@
 import {parser} from "@lezer/css"
 import {LRLanguage, continuedIndent, indentNodeProp, foldNodeProp, foldInside, LanguageSupport} from "@codemirror/language"
-import {Extension} from "@codemirror/state"
 import {cssCompletionSource} from "./complete"
 export {cssCompletionSource} from "./complete"
 
@@ -25,10 +24,7 @@ export const cssLanguage = LRLanguage.define({
   }
 })
 
-// FIXME remove on next major version
-export const cssCompletion: Extension = cssLanguage.data.of({autocomplete: cssCompletionSource})
-
 /// Language support for CSS.
 export function css() {
-  return new LanguageSupport(cssLanguage, cssCompletion)
+  return new LanguageSupport(cssLanguage, cssLanguage.data.of({autocomplete: cssCompletionSource}))
 }
