@@ -119,32 +119,32 @@ const tags = [
   "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "tr", "u", "ul"
 ].map(name => ({type: "type", label: name}))
 
-const span = /^[\w-]*/
+const identifier = /^[\w-]*/
 
 /// CSS property and value keyword completion source.
 export const cssCompletionSource: CompletionSource = context => {
   let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
   if (node.name == "PropertyName")
-    return {from: node.from, options: properties(), span}
+    return {from: node.from, options: properties(), validFor: identifier}
   if (node.name == "ValueName")
-    return {from: node.from, options: values, span}
+    return {from: node.from, options: values, validFor: identifier}
   if (node.name == "PseudoClassName")
-    return {from: node.from, options: pseudoClasses, span}
+    return {from: node.from, options: pseudoClasses, validFor: identifier}
   if (node.name == "TagName") {
     for (let {parent} = node; parent; parent = parent.parent)
-      if (parent.name == "Block") return {from: node.from, options: properties(), span}
-    return {from: node.from, options: tags, span}
+      if (parent.name == "Block") return {from: node.from, options: properties(), validFor: identifier}
+    return {from: node.from, options: tags, validFor: identifier}
   }
 
   if (!context.explicit) return null
 
   let above = node.resolve(pos), before = above.childBefore(pos)
   if (before && before.name == ":" && above.name == "PseudoClassSelector")
-    return {from: pos, options: pseudoClasses, span}
+    return {from: pos, options: pseudoClasses, validFor: identifier}
   if (before && before.name == ":" && above.name == "Declaration" || above.name == "ArgList")
-    return {from: pos, options: values, span}
+    return {from: pos, options: values, validFor: identifier}
   if (above.name == "Block")
-    return {from: pos, options: properties(), span}
+    return {from: pos, options: properties(), validFor: identifier}
   
   return null
 }
