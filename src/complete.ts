@@ -14,17 +14,18 @@ function properties() {
 }
 
 const pseudoClasses = [
-  "active", "after", "any-link", "autofill", "before", "checked",
-  "default", "defined", "disabled", "empty", "enabled", "first",
-  "first-child", "first-letter", "first-line", "first-of-type",
-  "focus", "focus-visible", "focus-within", "fullscreen", "has",
-  "host", "host-context", "hover", "in-range", "indeterminate",
-  "invalid", "is", "lang", "last-child", "last-of-type", "left",
-  "link", "modal", "not", "nth-child", "nth-last-child",
-  "nth-last-of-type", "nth-of-type", "only-child", "only-of-type",
-  "optional", "out-of-range", "placeholder", "placeholder-shown",
-  "read-only", "read-write", "required", "right", "root", "scope",
-  "selection", "target", "valid", "visited", "where"
+  "active", "after", "any-link", "autofill", "backdrop", "before",
+  "checked", "cue", "default", "defined", "disabled", "empty",
+  "enabled", "file-selector-button", "first", "first-child",
+  "first-letter", "first-line", "first-of-type", "focus",
+  "focus-visible", "focus-within", "fullscreen", "has", "host",
+  "host-context", "hover", "in-range", "indeterminate", "invalid",
+  "is", "lang", "last-child", "last-of-type", "left", "link", "marker",
+  "modal", "not", "nth-child", "nth-last-child", "nth-last-of-type",
+  "nth-of-type", "only-child", "only-of-type", "optional", "out-of-range",
+  "part", "placeholder", "placeholder-shown", "read-only", "read-write",
+  "required", "right", "root", "scope", "selection", "slotted", "target",
+  "target-text", "valid", "visited", "where"
 ].map(name => ({type: "class", label: name}))
 
 const values = [
