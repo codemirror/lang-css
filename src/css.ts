@@ -7,6 +7,7 @@ export {cssCompletionSource} from "./complete"
 /// parser](https://github.com/lezer-parser/css), extended with
 /// highlighting and indentation information.
 export const cssLanguage = LRLanguage.define({
+  name: "css",
   parser: parser.configure({
     props: [
       indentNodeProp.add({
