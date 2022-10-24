@@ -1,3 +1,9 @@
+## 6.0.1 (2022-10-24)
+
+### Bug fixes
+
+CSS completion now supports a number of additional recent and semi-standardized pseudo-class names.
+
 ## 6.0.0 (2022-06-08)
 
 ### Breaking changes
