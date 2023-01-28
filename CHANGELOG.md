@@ -1,3 +1,9 @@
+## 6.0.2 (2023-01-28)
+
+### Bug fixes
+
+Fetch the available CSS property names in a way that works on Chrome.
+
 ## 6.0.1 (2022-10-24)
 
 ### Bug fixes
