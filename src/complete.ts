@@ -4,9 +4,15 @@ import {syntaxTree} from "@codemirror/language"
 let _properties: readonly Completion[] | null = null
 function properties() {
   if (!_properties && typeof document == "object" && document.body) {
-    let names = []
-    for (let prop in document.body.style) {
-      if (!/[A-Z]|^-|^(item|length)$/.test(prop)) names.push(prop)
+    let {style} = document.body, names = [], seen = new Set
+    for (let prop in style) if (prop != "cssText" && prop != "cssFloat") {
+      if (typeof style[prop] == "string") {
+        if (/[A-Z]/.test(prop)) prop = prop.replace(/[A-Z]/g, ch => "-" + ch.toLowerCase())
+        if (!seen.has(prop)) {
+          names.push(prop)
+          seen.add(prop)
+        }
+      }
     }
     _properties = names.sort().map(name => ({type: "property", label: name}))
   }
