@@ -1,3 +1,9 @@
+## 6.1.0 (2023-03-06)
+
+### New features
+
+CSS completion can now complete variable names.
+
 ## 6.0.2 (2023-01-28)
 
 ### Bug fixes
