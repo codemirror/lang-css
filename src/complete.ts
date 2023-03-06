@@ -1,5 +1,7 @@
 import {CompletionSource, Completion} from "@codemirror/autocomplete"
 import {syntaxTree} from "@codemirror/language"
+import {SyntaxNode, NodeWeakMap, IterMode} from "@lezer/common"
+import {Text} from "@codemirror/state"
 
 let _properties: readonly Completion[] | null = null
 function properties() {
@@ -129,17 +131,62 @@ const tags = [
   "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "tr", "u", "ul"
 ].map(name => ({type: "type", label: name}))
 
-const identifier = /^[\w-]*/
+const identifier = /^(\w[\w-]*|-\w[\w-]*|)$/, variable = /^-(-[\w-]*)?$/
 
-/// CSS property and value keyword completion source.
+function isVarArg(node: SyntaxNode, doc: Text) {
+  if (node.name == "(" || node.type.isError) node = node.parent || node
+  if (node.name != "ArgList") return false
+  let callee = node.parent?.firstChild
+  if (callee?.name != "Callee") return false
+  return doc.sliceString(callee.from, callee.to) == "var"
+}
+
+const VariablesByNode = new NodeWeakMap<readonly Completion[]>()
+const declSelector = ["Declaration"]
+
+function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
+  if (node.to - node.from > 4096) {
+    let known = VariablesByNode.get(node)
+    if (known) return known
+    let result = [], seen = new Set, cursor = node.cursor(IterMode.IncludeAnonymous)
+    if (cursor.firstChild()) do {
+      for (let option of variableNames(doc, cursor.node)) if (!seen.has(option.label)) {
+        seen.add(option.label)
+        result.push(option)
+      }
+    } while (cursor.nextSibling())
+    VariablesByNode.set(node, result)
+    return result
+  } else {
+    let result: Completion[] = [], seen = new Set
+    node.cursor().iterate(node => {
+      if (node.name == "VariableName" && node.matchContext(declSelector) && node.node.nextSibling?.name == ":") {
+        let name = doc.sliceString(node.from, node.to)
+        if (!seen.has(name)) {
+          seen.add(name)
+          result.push({label: name, type: "variable"})
+        }
+      }
+    })
+    return result
+  }
+}
+
+
+/// CSS property, variable, and value keyword completion source.
 export const cssCompletionSource: CompletionSource = context => {
   let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
-  if (node.name == "PropertyName")
+  let isDash = node.type.isError && node.from == node.to - 1 && state.doc.sliceString(node.from, node.to) == "-"
+  if (node.name == "PropertyName" || isDash && node.parent?.name == "Block")
     return {from: node.from, options: properties(), validFor: identifier}
   if (node.name == "ValueName")
     return {from: node.from, options: values, validFor: identifier}
   if (node.name == "PseudoClassName")
     return {from: node.from, options: pseudoClasses, validFor: identifier}
+  if (node.name == "VariableName" || (context.explicit || isDash) && isVarArg(node, state.doc))
+    return {from: node.name == "VariableName" ? node.from : pos,
+            options: variableNames(state.doc, syntaxTree(state).topNode),
+            validFor: variable}
   if (node.name == "TagName") {
     for (let {parent} = node; parent; parent = parent.parent)
       if (parent.name == "Block") return {from: node.from, options: properties(), validFor: identifier}
@@ -155,6 +202,6 @@ export const cssCompletionSource: CompletionSource = context => {
     return {from: pos, options: values, validFor: identifier}
   if (above.name == "Block")
     return {from: pos, options: properties(), validFor: identifier}
-  
+
   return null
 }
