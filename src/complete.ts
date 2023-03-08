@@ -144,6 +144,13 @@ function isVarArg(node: SyntaxNode, doc: Text) {
 const VariablesByNode = new NodeWeakMap<readonly Completion[]>()
 const declSelector = ["Declaration"]
 
+function astTop(node: SyntaxNode) {
+  for (let cur: SyntaxNode | null = node;;) {
+    if (cur.type.isTop) return cur
+    if (!(cur = cur.parent)) return node
+  }
+}
+
 function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
   if (node.to - node.from > 4096) {
     let known = VariablesByNode.get(node)
@@ -185,7 +192,7 @@ export const cssCompletionSource: CompletionSource = context => {
     return {from: node.from, options: pseudoClasses, validFor: identifier}
   if (node.name == "VariableName" || (context.explicit || isDash) && isVarArg(node, state.doc))
     return {from: node.name == "VariableName" ? node.from : pos,
-            options: variableNames(state.doc, syntaxTree(state).topNode),
+            options: variableNames(state.doc, astTop(node)),
             validFor: variable}
   if (node.name == "TagName") {
     for (let {parent} = node; parent; parent = parent.parent)
