@@ -1,3 +1,9 @@
+## 6.1.1 (2023-03-08)
+
+### Bug fixes
+
+Provide better completions when completing directly in a `Styles` top node.
+
 ## 6.1.0 (2023-03-06)
 
 ### New features
