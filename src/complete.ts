@@ -184,7 +184,8 @@ function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
 export const cssCompletionSource: CompletionSource = context => {
   let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
   let isDash = node.type.isError && node.from == node.to - 1 && state.doc.sliceString(node.from, node.to) == "-"
-  if (node.name == "PropertyName" || isDash && node.parent?.name == "Block")
+  if (node.name == "PropertyName" ||
+      (isDash || node.name == "TagName") && /^(Block|Styles)$/.test(node.resolve(node.to).name))
     return {from: node.from, options: properties(), validFor: identifier}
   if (node.name == "ValueName")
     return {from: node.from, options: values, validFor: identifier}
@@ -207,7 +208,7 @@ export const cssCompletionSource: CompletionSource = context => {
     return {from: pos, options: pseudoClasses, validFor: identifier}
   if (before && before.name == ":" && above.name == "Declaration" || above.name == "ArgList")
     return {from: pos, options: values, validFor: identifier}
-  if (above.name == "Block")
+  if (above.name == "Block" || above.name == "Styles")
     return {from: pos, options: properties(), validFor: identifier}
 
   return null
