@@ -1,3 +1,13 @@
+## 6.2.0 (2023-04-26)
+
+### Bug fixes
+
+Explicitly list @lezer/common as a package dependency.
+
+### New features
+
+Export `defineCSSCompletionSource`, which allows one to define a CSS-style completion source for dialects with their own variable syntax.
+
 ## 6.1.1 (2023-03-08)
 
 ### Bug fixes
