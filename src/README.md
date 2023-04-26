@@ -26,3 +26,5 @@ to communication around the project.
 @cssLanguage
 
 @cssCompletionSource
+
+@defineCSSCompletionSource

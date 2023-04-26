@@ -37,6 +37,14 @@ highlighting and indentation information.</p>
 <dt id="user-content-csscompletionsource">
   <code><strong><a href="#user-content-csscompletionsource">cssCompletionSource</a></strong>: <a href="https://codemirror.net/docs/ref#autocomplete.CompletionSource">CompletionSource</a></code></dt>
 
-<dd><p>CSS property and value keyword completion source.</p>
+<dd><p>CSS property, variable, and value keyword completion source.</p>
+</dd>
+<dt id="user-content-definecsscompletionsource">
+  <code><strong><a href="#user-content-definecsscompletionsource">defineCSSCompletionSource</a></strong>(<a id="user-content-definecsscompletionsource^isvariable" href="#user-content-definecsscompletionsource^isvariable">isVariable</a>: fn(<a id="user-content-definecsscompletionsource^isvariable^node" href="#user-content-definecsscompletionsource^isvariable^node">node</a>: <a href="https://lezer.codemirror.net/docs/ref/#common.SyntaxNodeRef">SyntaxNodeRef</a>) → <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>) → <a href="https://codemirror.net/docs/ref#autocomplete.CompletionSource">CompletionSource</a></code></dt>
+
+<dd><p>Create a completion source for a CSS dialect, providing a
+predicate for determining what kind of syntax node can act as a
+completable variable. This is used by language modes like Sass and
+Less to reuse this package's completion logic.</p>
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 import {CompletionSource, Completion} from "@codemirror/autocomplete"
 import {syntaxTree} from "@codemirror/language"
-import {SyntaxNode, NodeWeakMap, IterMode} from "@lezer/common"
+import {SyntaxNode, SyntaxNodeRef, NodeWeakMap, IterMode} from "@lezer/common"
 import {Text} from "@codemirror/state"
 
 let _properties: readonly Completion[] | null = null
@@ -151,13 +151,14 @@ function astTop(node: SyntaxNode) {
   }
 }
 
-function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
+function variableNames(doc: Text, node: SyntaxNode,
+                       isVariable: (node: SyntaxNodeRef) => boolean): readonly Completion[] {
   if (node.to - node.from > 4096) {
     let known = VariablesByNode.get(node)
     if (known) return known
     let result = [], seen = new Set, cursor = node.cursor(IterMode.IncludeAnonymous)
     if (cursor.firstChild()) do {
-      for (let option of variableNames(doc, cursor.node)) if (!seen.has(option.label)) {
+      for (let option of variableNames(doc, cursor.node, isVariable)) if (!seen.has(option.label)) {
         seen.add(option.label)
         result.push(option)
       }
@@ -167,7 +168,7 @@ function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
   } else {
     let result: Completion[] = [], seen = new Set
     node.cursor().iterate(node => {
-      if (node.name == "VariableName" && node.matchContext(declSelector) && node.node.nextSibling?.name == ":") {
+      if (isVariable(node) && node.matchContext(declSelector) && node.node.nextSibling?.name == ":") {
         let name = doc.sliceString(node.from, node.to)
         if (!seen.has(name)) {
           seen.add(name)
@@ -179,21 +180,23 @@ function variableNames(doc: Text, node: SyntaxNode): readonly Completion[] {
   }
 }
 
-
-/// CSS property, variable, and value keyword completion source.
-export const cssCompletionSource: CompletionSource = context => {
+/// Create a completion source for a CSS dialect, providing a
+/// predicate for determining what kind of syntax node can act as a
+/// completable variable. This is used by language modes like Sass and
+/// Less to reuse this package's completion logic.
+export const defineCSSCompletionSource = (isVariable: (node: SyntaxNodeRef) => boolean): CompletionSource => context => {
   let {state, pos} = context, node = syntaxTree(state).resolveInner(pos, -1)
   let isDash = node.type.isError && node.from == node.to - 1 && state.doc.sliceString(node.from, node.to) == "-"
   if (node.name == "PropertyName" ||
-      (isDash || node.name == "TagName") && /^(Block|Styles)$/.test(node.resolve(node.to).name))
+    (isDash || node.name == "TagName") && /^(Block|Styles)$/.test(node.resolve(node.to).name))
     return {from: node.from, options: properties(), validFor: identifier}
   if (node.name == "ValueName")
     return {from: node.from, options: values, validFor: identifier}
   if (node.name == "PseudoClassName")
     return {from: node.from, options: pseudoClasses, validFor: identifier}
-  if (node.name == "VariableName" || (context.explicit || isDash) && isVarArg(node, state.doc))
-    return {from: node.name == "VariableName" ? node.from : pos,
-            options: variableNames(state.doc, astTop(node)),
+  if (isVariable(node) || (context.explicit || isDash) && isVarArg(node, state.doc))
+    return {from: isVariable(node) || isDash ? node.from : pos,
+            options: variableNames(state.doc, astTop(node), isVariable),
             validFor: variable}
   if (node.name == "TagName") {
     for (let {parent} = node; parent; parent = parent.parent)
@@ -213,3 +216,6 @@ export const cssCompletionSource: CompletionSource = context => {
 
   return null
 }
+
+/// CSS property, variable, and value keyword completion source.
+export const cssCompletionSource: CompletionSource = defineCSSCompletionSource(n => n.name == "VariableName" )

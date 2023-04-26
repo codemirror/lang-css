@@ -1,7 +1,7 @@
 import {parser} from "@lezer/css"
 import {LRLanguage, continuedIndent, indentNodeProp, foldNodeProp, foldInside, LanguageSupport} from "@codemirror/language"
 import {cssCompletionSource} from "./complete"
-export {cssCompletionSource} from "./complete"
+export {cssCompletionSource, defineCSSCompletionSource} from "./complete"
 
 /// A language provider based on the [Lezer CSS
 /// parser](https://github.com/lezer-parser/css), extended with
