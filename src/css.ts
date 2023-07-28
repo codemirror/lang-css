@@ -14,7 +14,7 @@ export const cssLanguage = LRLanguage.define({
         Declaration: continuedIndent()
       }),
       foldNodeProp.add({
-        Block: foldInside
+        "Block KeyframeList": foldInside
       })
     ]
   }),
