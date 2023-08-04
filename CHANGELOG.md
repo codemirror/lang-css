@@ -1,3 +1,9 @@
+## 6.2.1 (2023-08-04)
+
+### Bug fixes
+
+Allow keyframe blocks to be code-folded.
+
 ## 6.2.0 (2023-04-26)
 
 ### Bug fixes
