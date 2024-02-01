@@ -30,7 +30,7 @@
     "@codemirror/language": "^6.0.0",
     "@codemirror/state": "^6.0.0",
     "@lezer/common": "^1.0.2",
-    "@lezer/css": "^1.0.0"
+    "@lezer/css": "^1.1.7"
   },
   "devDependencies": {
     "@codemirror/buildhelper": "^1.0.0"
