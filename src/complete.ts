@@ -131,6 +131,12 @@ const tags = [
   "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "tr", "u", "ul"
 ].map(name => ({type: "type", label: name}))
 
+const atRules = [
+  '@charset','@color-profile','@container','@counter-style','@font-face','@font-feature-values',
+  '@font-palette-values','@import','@keyframes','@layer','@media','@namespace','@page',
+  '@position-try','@property','@scope','@starting-style','@supports','@view-transition'
+].map(label => ({type: "class", label}))
+
 const identifier = /^(\w[\w-]*|-\w[\w-]*|)$/, variable = /^-(-[\w-]*)?$/
 
 function isVarArg(node: SyntaxNode, doc: Text) {
@@ -203,6 +209,8 @@ export const defineCSSCompletionSource = (isVariable: (node: SyntaxNodeRef) => b
       if (parent.name == "Block") return {from: node.from, options: properties(), validFor: identifier}
     return {from: node.from, options: tags, validFor: identifier}
   }
+  if (node.name == 'AtKeyword')
+    return {from: node.from, options: atRules, validFor: identifier}
 
   if (!context.explicit) return null
 
