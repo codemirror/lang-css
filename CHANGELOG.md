@@ -1,3 +1,9 @@
+## 6.3.0 (2024-09-07)
+
+### New features
+
+CSS autocompletion now completes `@`-keywords.
+
 ## 6.2.1 (2023-08-04)
 
 ### Bug fixes
