@@ -1,3 +1,9 @@
+## 6.3.1 (2024-11-26)
+
+### Bug fixes
+
+When completing a property name, insert a colon and space after the name.
+
 ## 6.3.0 (2024-09-07)
 
 ### New features
