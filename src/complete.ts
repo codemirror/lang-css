@@ -16,7 +16,7 @@ function properties() {
         }
       }
     }
-    _properties = names.sort().map(name => ({type: "property", label: name}))
+    _properties = names.sort().map(name => ({type: "property", label: name, apply: name + ": "}))
   }
   return _properties || []
 }
