@@ -19,6 +19,19 @@ we have a [code of
 conduct](http://contributor-covenant.org/version/1/1/0/) that applies
 to communication around the project.
 
+## Usage
+
+```javascript
+import {EditorView, basicSetup} from "codemirror"
+import {css} from "@codemirror/lang-css"
+
+const view = new EditorView({
+  parent: document.body,
+  doc: `p { background-color: purple }`,
+  extensions: [basicSetup, css()]
+})
+```
+
 ## API Reference
 
 <dl>
