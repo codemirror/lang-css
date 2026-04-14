@@ -2,7 +2,7 @@
 
 # @codemirror/lang-css [![NPM version](https://img.shields.io/npm/v/@codemirror/lang-css.svg)](https://www.npmjs.org/package/@codemirror/lang-css)
 
-[ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://github.com/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/) | [**CHANGELOG**](https://github.com/codemirror/lang-css/blob/main/CHANGELOG.md) ]
+[ [**WEBSITE**](https://codemirror.net/) | [**ISSUES**](https://code.haverbeke.berlin/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/) | [**CHANGELOG**](https://code.haverbeke.berlin/codemirror/lang-css/src/branch/main/CHANGELOG.md) ]
 
 This package implements CSS language support for the
 [CodeMirror](https://codemirror.net/) code editor.
@@ -12,7 +12,7 @@ number of [examples](https://codemirror.net/examples/) and the
 [documentation](https://codemirror.net/docs/).
 
 This code is released under an
-[MIT license](https://github.com/codemirror/lang-css/tree/main/LICENSE).
+[MIT license](https://code.haverbeke.berlin/codemirror/lang-css/tree/main/LICENSE).
 
 We aim to be an inclusive, welcoming community. To make that explicit,
 we have a [code of
@@ -43,7 +43,7 @@ const view = new EditorView({
 <dt id="user-content-csslanguage">
   <code><strong><a href="#user-content-csslanguage">cssLanguage</a></strong>: <a href="https://codemirror.net/docs/ref#language.LRLanguage">LRLanguage</a></code></dt>
 
-<dd><p>A language provider based on the <a href="https://github.com/lezer-parser/css">Lezer CSS
+<dd><p>A language provider based on the <a href="https://code.haverbeke.berlin/lezer/css">Lezer CSS
 parser</a>, extended with
 highlighting and indentation information.</p>
 </dd>

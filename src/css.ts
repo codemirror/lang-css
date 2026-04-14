@@ -4,7 +4,7 @@ import {cssCompletionSource} from "./complete"
 export {cssCompletionSource, defineCSSCompletionSource} from "./complete"
 
 /// A language provider based on the [Lezer CSS
-/// parser](https://github.com/lezer-parser/css), extended with
+/// parser](https://code.haverbeke.berlin/lezer/css), extended with
 /// highlighting and indentation information.
 export const cssLanguage = LRLanguage.define({
   name: "css",
